@@ -1,4 +1,3 @@
-kcat > helm/library-management-system/values.yaml <<'YAML'
 namespace: webapp
 
 image:
@@ -46,5 +45,4 @@ mysql:
     limits:
       cpu: "500m"
       memory: "1Gi"
-YAML
 
