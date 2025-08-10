@@ -51,7 +51,7 @@ WSGI_APPLICATION = 'libraryproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb',
+        'NAME': 'django.db.backends.mysql',
         'USER': 'N01683837W25',
         'PASSWORD': 'Toronto@2024',
         'HOST': 'mysql',
@@ -68,4 +68,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ["*"]
