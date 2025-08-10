@@ -1,17 +1,26 @@
+mkdir -p k8s
+cat > k8s/application.yaml <<'YAML'
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: django
+  namespace: argocd
 spec:
   project: default
   source:
-    path: k8s
-    repoURL: https://github.com/KanimozhiMurugesan26/library-management-system-gitops.git
+    repoURL: https://github.com/KanimozhiMurugesan26/DevOps-Project.git
     targetRevision: HEAD
+    path: helm/library-management-system
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
-    namespace: default
     server: https://kubernetes.default.svc
+    namespace: webapp
   syncPolicy:
     automated:
-        prune: true            # delete any resources removed from Git
-        selfHeal: true         # revert out‑of‑band changes
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+YAML
