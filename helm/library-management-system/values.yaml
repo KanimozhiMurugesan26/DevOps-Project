@@ -31,7 +31,7 @@ probes:
 
 mysql:
   image: "mysql:8.0"
-  storageClassName: ""
+  storageClassName: "local-path"
   storageSize: 5Gi
   database: "mydb"
   username: "N01683837W25"
