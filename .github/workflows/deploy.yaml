@@ -2,8 +2,7 @@ name: CI/CD Pipeline for Django App
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -23,6 +22,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Compute image tag (short SHA)
+      id: vars
+      run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
@@ -37,4 +40,18 @@ jobs:
       with:
         context: .
         push: true
-        tags: kanimozhimurugesan197/library-management-system:latest
+        tags: |
+          kanimozhimurugesan197/library-management-system:latest
+          kanimozhimurugesan197/library-management-system:${{ steps.vars.outputs.TAG }}
+
+    - name: Update Helm values.yaml with new image tag
+      uses: mikefarah/yq@v4.44.3
+      with:
+        cmd: yq -i '.image.tag = "${{ steps.vars.outputs.TAG }}"' helm/library-management-system/values.yaml
+
+    - name: Commit and push updated values.yaml
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "ci: bump image tag to ${{ steps.vars.outputs.TAG }}"
+        branch: main
+        file_pattern: helm/library-management-system/values.yaml
