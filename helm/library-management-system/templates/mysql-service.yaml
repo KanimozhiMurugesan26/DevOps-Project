@@ -1,0 +1,16 @@
+cat > helm/library-management-system/templates/mysql-service.yaml <<'YAML'
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "library-management-system.fullname" . }}-mysql
+  labels:
+    app: {{ include "library-management-system.name" . }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ include "library-management-system.name" . }}
+    tier: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+YAML

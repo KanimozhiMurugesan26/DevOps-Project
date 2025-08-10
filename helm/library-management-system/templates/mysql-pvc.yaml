@@ -1,0 +1,12 @@
+cat > helm/library-management-system/templates/mysql-pvc.yaml <<'YAML'
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "library-management-system.fullname" . }}-mysql
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: {{ .Values.mysql.storageSize }}
+  storageClassName: {{ .Values.mysql.storageClassName | default "" | quote }}
+YAML

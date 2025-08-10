@@ -1,0 +1,64 @@
+cat > helm/library-management-system/templates/mysql-deployment.yaml <<'YAML'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "library-management-system.fullname" . }}-mysql
+  labels:
+    app: {{ include "library-management-system.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "library-management-system.name" . }}
+      tier: mysql
+  template:
+    metadata:
+      labels:
+        app: {{ include "library-management-system.name" . }}
+        tier: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: {{ .Values.mysql.image | quote }}
+          env:
+            - name: MYSQL_DATABASE
+              value: {{ .Values.mysql.database | quote }}
+            - name: MYSQL_USER
+              value: {{ .Values.mysql.username | quote }}
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-management-system.fullname" . }}-mysql
+                  key: db-password
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-management-system.fullname" . }}-mysql
+                  key: root-password
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: {{ .Values.mysql.resources.requests.cpu | quote }}
+              memory: {{ .Values.mysql.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.mysql.resources.limits.cpu | quote }}
+              memory: {{ .Values.mysql.resources.limits.memory | quote }}
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: {{ include "library-management-system.fullname" . }}-mysql
+YAML

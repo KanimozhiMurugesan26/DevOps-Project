@@ -1,0 +1,20 @@
+cat > helm/library-management-system/templates/django-service.yaml <<'YAML'
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "library-management-system.fullname" . }}-django
+  labels:
+    app: {{ include "library-management-system.name" . }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "library-management-system.name" . }}
+    tier: django
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: 8000
+      {{- if eq .Values.service.type "NodePort" }}
+      nodePort: {{ .Values.service.nodePort | default 30080 }}
+      {{- end }}
+YAML
