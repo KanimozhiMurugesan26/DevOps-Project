@@ -1,4 +1,3 @@
-cat > helm/library-management-system/templates/django-deployment.yaml <<'YAML'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -56,4 +55,3 @@ spec:
             limits:
               cpu: {{ .Values.resources.limits.cpu | quote }}
               memory: {{ .Values.resources.limits.memory | quote }}
-YAML

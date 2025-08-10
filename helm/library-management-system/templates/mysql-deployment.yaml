@@ -1,4 +1,3 @@
-cat > helm/library-management-system/templates/mysql-deployment.yaml <<'YAML'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -61,4 +60,3 @@ spec:
         - name: mysql-storage
           persistentVolumeClaim:
             claimName: {{ include "library-management-system.fullname" . }}-mysql
-YAML
