@@ -19,11 +19,11 @@ resources:
 
 probes:
   liveness:
-    path: /
+    path: /healthz
     initialDelaySeconds: 30
     periodSeconds: 10
   readiness:
-    path: /
+    path: /healthz
     initialDelaySeconds: 15
     periodSeconds: 10
 

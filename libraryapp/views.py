@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db import connection
 from datetime import datetime
+from django.http import HttpResponse
 
 # Helper function to execute raw SQL
 
@@ -152,3 +153,6 @@ def reservations(request):
     else:
         transactions = []
     return render(request, 'libraryapp/reservations.html', {'transactions': transactions})
+
+def healthz(request):
+    return HttpResponse("OK")
