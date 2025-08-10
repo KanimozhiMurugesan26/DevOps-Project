@@ -2,10 +2,8 @@ namespace: webapp
 
 image:
   repository: kanimozhimurugesan197/library-management-system
-  tag: "latest"
-  pullPolicy: IfNotPresent
-
-service:
+  tag: "dbhost-fix-1"
+  pullPolicy: Always
   type: NodePort
   port: 8000
 
