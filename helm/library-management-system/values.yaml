@@ -2,7 +2,7 @@ namespace: webapp
 
 image:
   repository: kanimozhimurugesan197/library-management-system
-  tag: "sqlite-test-1"
+  tag: "sqlite-final-1"
   pullPolicy: Always
 
 service:
@@ -20,12 +20,23 @@ resources:
 probes:
   liveness:
     path: /healthz
-    initialDelaySeconds: 30
-    periodSeconds: 10
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 6
   readiness:
     path: /healthz
-    initialDelaySeconds: 15
+    initialDelaySeconds: 20
     periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+
+startupProbe:
+  path: /healthz
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
 
 mysql:
   image: "mysql:8.0"
