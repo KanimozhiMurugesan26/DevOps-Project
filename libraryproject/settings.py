@@ -3,9 +3,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'your-secret-key'
-
 DEBUG = True
-
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -51,11 +49,12 @@ WSGI_APPLICATION = 'libraryproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django.db.backends.mysql',
+        'NAME': 'mydb',
         'USER': 'N01683837W25',
         'PASSWORD': 'Toronto@2024',
-        'HOST': 'mysql',
+        'HOST': 'library-management-system-mysql', 
         'PORT': '3306',
+        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
     }
 }
 

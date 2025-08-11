@@ -2,7 +2,7 @@ namespace: webapp
 
 image:
   repository: kanimozhimurugesan197/library-management-system
-  tag: "dbhost-fix-2"
+  tag: "dbhost-fix-3"
   pullPolicy: Always
 
 service:
