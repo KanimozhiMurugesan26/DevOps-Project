@@ -2,7 +2,7 @@ namespace: webapp
 
 image:
   repository: kanimozhimurugesan197/library-management-system
-  tag: "dbhost-fix-4"
+  tag: "sqlite-test-1"
   pullPolicy: Always
 
 service:
